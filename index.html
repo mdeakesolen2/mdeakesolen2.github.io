@@ -110,6 +110,82 @@
             width: 100%;
         }
 
+        /* Mystery teaser box */
+        .mystery-container {
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .mystery-box {
+            display: inline-block;
+            padding: 25px;
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(59, 130, 246, 0.2);
+            border-radius: 20px;
+            position: relative;
+            animation: mysteryFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes mysteryFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .mystery-box::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(45deg, rgba(59, 130, 246, 0.2), transparent, rgba(59, 130, 246, 0.2));
+            border-radius: 20px;
+            z-index: -1;
+            filter: blur(10px);
+            animation: borderShimmer 3s linear infinite;
+        }
+
+        @keyframes borderShimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .pixel-art {
+            width: 80px;
+            height: 80px;
+            background: 
+                linear-gradient(135deg, 
+                    #5bcefa 0%, #5bcefa 25%,
+                    transparent 25%, transparent 50%,
+                    #5bcefa 50%, #5bcefa 75%,
+                    transparent 75%, transparent 100%);
+            background-size: 20px 20px;
+            border-radius: 8px;
+            box-shadow: 
+                inset -3px -3px 6px rgba(0, 0, 0, 0.3),
+                inset 3px 3px 6px rgba(255, 255, 255, 0.1),
+                0 0 30px rgba(91, 206, 250, 0.3);
+            animation: pixelGlow 2s ease-in-out infinite;
+            transition: transform 0.3s ease;
+        }
+
+        .pixel-art:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        @keyframes pixelGlow {
+            0%, 100% { 
+                box-shadow: 
+                    inset -3px -3px 6px rgba(0, 0, 0, 0.3),
+                    inset 3px 3px 6px rgba(255, 255, 255, 0.1),
+                    0 0 30px rgba(91, 206, 250, 0.3);
+            }
+            50% { 
+                box-shadow: 
+                    inset -3px -3px 6px rgba(0, 0, 0, 0.3),
+                    inset 3px 3px 6px rgba(255, 255, 255, 0.1),
+                    0 0 50px rgba(91, 206, 250, 0.6);
+            }
+        }
+
         /* Clean modern heading */
         h1 {
             font-size: clamp(3rem, 10vw, 7rem);
@@ -325,9 +401,71 @@
             animation: fadeInUp 1s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
         }
 
-        h1 { animation-delay: 0.1s; }
-        .subtitle { animation-delay: 0.2s; }
-        .countdown-wrapper { animation-delay: 0.3s; }
+        h1 { animation-delay: 0.2s; }
+        .subtitle { animation-delay: 0.3s; }
+        .countdown-wrapper { animation-delay: 0.4s; }
+        .mystery-container { animation-delay: 0.1s; }
+
+        /* Secret notification */
+        .secret-notification {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(239, 68, 68, 0.5);
+            border-radius: 16px;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            z-index: 10000;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            transform: translateX(400px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .secret-notification.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .notif-icon {
+            font-size: 2rem;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px) rotate(-5deg); }
+            75% { transform: translateX(10px) rotate(5deg); }
+        }
+
+        .notif-text {
+            color: #fff;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .notif-text strong {
+            font-weight: 700;
+            color: #ef4444;
+            font-size: 1.1rem;
+        }
+
+        .notif-text span {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        @media (max-width: 768px) {
+            .secret-notification {
+                top: 20px;
+                right: 20px;
+                left: 20px;
+                padding: 16px 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -341,13 +479,7 @@
         <!-- Mystery teaser image -->
         <div class="mystery-container">
             <div class="mystery-box">
-                <div class="pixel-art">
-                    <div class="block grass"></div>
-                    <div class="block dirt"></div>
-                    <div class="block stone"></div>
-                    <div class="block diamond"></div>
-                    <div class="question-mark">?</div>
-                </div>
+                <div class="pixel-art"></div>
             </div>
         </div>
         
@@ -427,6 +559,86 @@
                 orb.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
             });
         });
+
+        // Anti-inspect protection
+        document.addEventListener('keydown', function(e) {
+            // Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C, Ctrl+U, F12
+            if (
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
+                (e.ctrlKey && e.key === 'u') ||
+                e.key === 'F12'
+            ) {
+                e.preventDefault();
+                showNotification();
+                return false;
+            }
+        });
+
+        // Prevent right-click
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            showNotification();
+            return false;
+        });
+
+        // Notification function
+        function showNotification() {
+            // Remove existing notification if any
+            const existingNotif = document.querySelector('.secret-notification');
+            if (existingNotif) {
+                existingNotif.remove();
+            }
+
+            // Create notification
+            const notification = document.createElement('div');
+            notification.className = 'secret-notification';
+            notification.innerHTML = `
+                <div class="notif-icon">🚫</div>
+                <div class="notif-text">
+                    <strong>Nuh uh!</strong><br>
+                    <span>Ei näe, anlaki 😏</span>
+                </div>
+            `;
+            document.body.appendChild(notification);
+
+            // Animate in
+            setTimeout(() => notification.classList.add('show'), 10);
+
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // DevTools detection
+        const devtools = {
+            isOpen: false,
+            orientation: null
+        };
+
+        const threshold = 160;
+        const emitEvent = (isOpen, orientation) => {
+            if (devtools.isOpen !== isOpen || devtools.orientation !== orientation) {
+                devtools.isOpen = isOpen;
+                devtools.orientation = orientation;
+                if (isOpen) {
+                    showNotification();
+                }
+            }
+        };
+
+        setInterval(() => {
+            const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+            const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+            const orientation = widthThreshold ? 'vertical' : 'horizontal';
+
+            if (!(heightThreshold && widthThreshold) && ((window.Firebug && window.Firebug.chrome && window.Firebug.chrome.isInitialized) || widthThreshold || heightThreshold)) {
+                emitEvent(true, orientation);
+            } else {
+                emitEvent(false, null);
+            }
+        }, 500);
     </script>
 </body>
 </html>
