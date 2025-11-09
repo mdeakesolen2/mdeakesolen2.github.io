@@ -3,80 +3,300 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Väga Stiilne Leht</title>
+    <title>Midagi Suurt Tulemas...</title>
     <style>
-        /* Reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1419 100%);
             color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
         }
 
         .container {
             text-align: center;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 50px 80px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            animation: fadeIn 2s ease-in-out;
+            z-index: 10;
+            padding: 20px;
+            max-width: 900px;
+        }
+
+        .glitch-wrapper {
+            margin-bottom: 40px;
         }
 
         h1 {
-            font-size: 3rem;
+            font-size: 4em;
+            font-weight: 900;
+            letter-spacing: 5px;
             margin-bottom: 20px;
-            animation: slideIn 1s forwards;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, #00d4ff, #0099ff, #00d4ff);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease infinite, flicker 5s infinite;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
         }
 
-        p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            line-height: 1.5;
-            color: #f0f0f0;
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        .btn {
-            padding: 12px 30px;
-            font-size: 1rem;
-            border: none;
-            border-radius: 50px;
-            background: linear-gradient(45deg, #ff6a00, #ee0979);
-            color: white;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            41%, 43% { opacity: 0.8; }
+            45% { opacity: 1; }
         }
 
-        .btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        .subtitle {
+            font-size: 1.8em;
+            color: #00d4ff;
+            margin-bottom: 60px;
+            letter-spacing: 3px;
+            animation: pulse 2s ease-in-out infinite;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
         }
 
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-50px); }
-            to { opacity: 1; transform: translateX(0); }
+        .countdown-container {
+            background: rgba(0, 20, 40, 0.6);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 0 60px rgba(0, 212, 255, 0.2), inset 0 0 60px rgba(0, 212, 255, 0.1);
+            animation: borderGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { border-color: rgba(0, 212, 255, 0.3); }
+            50% { border-color: rgba(0, 212, 255, 0.8); }
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .time-unit {
+            background: rgba(0, 50, 100, 0.4);
+            border: 1px solid rgba(0, 212, 255, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            min-width: 120px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .time-unit:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.4);
+        }
+
+        .time-value {
+            font-size: 3.5em;
+            font-weight: bold;
+            color: #00d4ff;
+            text-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .time-label {
+            font-size: 1em;
+            color: #6fb3d2;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .message {
+            margin-top: 50px;
+            font-size: 1.4em;
+            color: #00d4ff;
+            letter-spacing: 2px;
+            animation: fadeInOut 3s ease-in-out infinite;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        .scan-line {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+            animation: scan 4s linear infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
+        }
+
+        .github-link {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 30px;
+            background: rgba(0, 50, 100, 0.4);
+            border: 2px solid rgba(0, 212, 255, 0.4);
+            border-radius: 10px;
+            color: #00d4ff;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        .github-link:hover {
+            background: rgba(0, 100, 200, 0.6);
+            border-color: #00d4ff;
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+            transform: translateX(-50%) scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5em;
+            }
+            
+            .subtitle {
+                font-size: 1.2em;
+            }
+            
+            .countdown {
+                gap: 15px;
+            }
+            
+            .time-unit {
+                min-width: 80px;
+                padding: 15px;
+            }
+            
+            .time-value {
+                font-size: 2.5em;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="stars" id="stars"></div>
+    <div class="scan-line"></div>
+    
     <div class="container">
-        <h1>Tere Tulemast!</h1>
-        <p>See on väga stiilne ja kaasaegne leht, kus kõik CSS on otse HTML failis sees.</p>
-        <button class="btn">Alusta Siit</button>
+        <div class="glitch-wrapper">
+            <h1>MIDAGI SUURT TULEMAS</h1>
+            <p class="subtitle">// VARSTI PALJASTATUD //</p>
+        </div>
+        
+        <div class="countdown-container">
+            <div class="countdown" id="countdown">
+                <div class="time-unit">
+                    <span class="time-value" id="days">00</span>
+                    <span class="time-label">Päeva</span>
+                </div>
+                <div class="time-unit">
+                    <span class="time-value" id="hours">00</span>
+                    <span class="time-label">Tundi</span>
+                </div>
+                <div class="time-unit">
+                    <span class="time-value" id="minutes">00</span>
+                    <span class="time-label">Minutit</span>
+                </div>
+                <div class="time-unit">
+                    <span class="time-value" id="seconds">00</span>
+                    <span class="time-label">Sekundit</span>
+                </div>
+            </div>
+            
+            <p class="message">01.12.2024 - Kõik selgub...</p>
+        </div>
     </div>
+
+    <a href="https://github.com/mdeakesolen2" class="github-link">👤 @mdeakesolen2</a>
+
+    <script>
+        // Generate stars
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = Math.random() * 3 + 'px';
+            star.style.height = star.style.width;
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            starsContainer.appendChild(star);
+        }
+
+        // Countdown timer
+        const countdownDate = new Date('December 1, 2024 00:00:00').getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+            if (distance < 0) {
+                document.querySelector('.countdown-container').innerHTML = '<h2 style="font-size: 3em; color: #00d4ff;">🎉 SEE ON SIIN! 🎉</h2>';
+            }
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
 </body>
 </html>
