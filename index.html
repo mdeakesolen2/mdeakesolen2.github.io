@@ -4,312 +4,372 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Midagi On Tulemas</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
         
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Rajdhani', sans-serif;
-        }
-
-        /* Custom animations */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
-        }
-
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.5), 0 0 40px rgba(0, 212, 255, 0.3); }
-            50% { box-shadow: 0 0 40px rgba(0, 212, 255, 0.8), 0 0 80px rgba(0, 212, 255, 0.5); }
-        }
-
-        @keyframes shimmer {
-            0% { background-position: -1000px 0; }
-            100% { background-position: 1000px 0; }
-        }
-
-        @keyframes scan {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100vh); }
-        }
-
-        @keyframes ripple {
-            0% { transform: scale(0.8); opacity: 1; }
-            100% { transform: scale(2.5); opacity: 0; }
-        }
-
-        @keyframes pulse-ring {
-            0% { transform: scale(0.33); opacity: 1; }
-            80%, 100% { opacity: 0; }
-        }
-
-        @keyframes neon {
-            0%, 100% { text-shadow: 0 0 10px rgba(0, 212, 255, 0.8), 0 0 20px rgba(0, 212, 255, 0.6), 0 0 30px rgba(0, 212, 255, 0.4); }
-            50% { text-shadow: 0 0 20px rgba(0, 212, 255, 1), 0 0 40px rgba(0, 212, 255, 0.8), 0 0 60px rgba(0, 212, 255, 0.6); }
-        }
-
-        .animate-float {
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .animate-glow {
-            animation: glow 3s ease-in-out infinite;
-        }
-
-        .animate-shimmer {
-            animation: shimmer 3s linear infinite;
-        }
-
-        .animate-scan {
-            animation: scan 4s linear infinite;
-        }
-
-        .animate-ripple {
-            animation: ripple 2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
-        }
-
-        .animate-pulse-ring {
-            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
-        }
-
-        .animate-neon {
-            animation: neon 2s ease-in-out infinite;
-        }
-
-        .glass-morphism {
-            background: rgba(10, 22, 40, 0.5);
-            backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(0, 212, 255, 0.2);
-        }
-
-        .text-gradient {
-            background: linear-gradient(135deg, #00d4ff 0%, #0099ff 50%, #00ffff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .cyber-border {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #000000;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
             position: relative;
         }
 
-        .cyber-border::before {
+        /* Subtle animated gradient background */
+        .gradient-bg {
+            position: fixed;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(30, 58, 138, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(30, 64, 175, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(37, 99, 235, 0.1) 0%, transparent 50%);
+            animation: gradientMove 20s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.6; }
+            50% { transform: scale(1.05) rotate(2deg); opacity: 0.8; }
+        }
+
+        /* Minimal grid overlay */
+        .grid {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 30s linear infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        /* Subtle floating orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.3;
+            animation: float 25s infinite ease-in-out;
+            mix-blend-mode: lighten;
+        }
+
+        .orb1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, transparent 70%);
+            top: -250px;
+            left: -250px;
+            animation-delay: 0s;
+        }
+
+        .orb2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.3) 0%, transparent 70%);
+            bottom: -200px;
+            right: -200px;
+            animation-delay: 10s;
+        }
+
+        .orb3 {
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(30, 64, 175, 0.35) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            animation-delay: 5s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(50px, -50px) scale(1.05); }
+            66% { transform: translate(-50px, 50px) scale(0.95); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 40px;
+            max-width: 1100px;
+            width: 100%;
+        }
+
+        /* Clean modern heading */
+        h1 {
+            font-size: clamp(3rem, 10vw, 7rem);
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #ffffff 0%, #93c5fd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.03em;
+            text-shadow: 0 0 40px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Minimal subtitle */
+        .subtitle {
+            font-size: clamp(0.95rem, 2.5vw, 1.3rem);
+            font-weight: 400;
+            color: rgba(148, 163, 184, 0.9);
+            margin-bottom: 80px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        /* Clean countdown container */
+        .countdown-wrapper {
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(30px) saturate(120%);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            border-radius: 28px;
+            padding: 60px 40px;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Subtle glow effect */
+        .countdown-wrapper::after {
             content: '';
             position: absolute;
-            inset: -2px;
-            background: linear-gradient(45deg, #00d4ff, #0099ff, #00ffff, #00d4ff);
-            background-size: 300% 300%;
-            border-radius: inherit;
-            z-index: -1;
-            filter: blur(10px);
-            opacity: 0.7;
-            animation: shimmer 3s linear infinite;
+            inset: -100%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 50%);
+            animation: glowPulse 8s ease-in-out infinite;
         }
 
-        .orbitron {
-            font-family: 'Orbitron', sans-serif;
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
         }
 
-        /* Grid pattern */
-        .grid-pattern {
-            background-image: 
-                linear-gradient(rgba(0, 212, 255, 0.05) 2px, transparent 2px),
-                linear-gradient(90deg, rgba(0, 212, 255, 0.05) 2px, transparent 2px);
-            background-size: 50px 50px;
+        .countdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 28px;
+            max-width: 750px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
 
-        /* Scan line */
-        .scan-line {
+        .time-unit {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(59, 130, 246, 0.15);
+            border-radius: 20px;
+            padding: 40px 20px;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .time-unit::before {
+            content: '';
             position: absolute;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.8), transparent);
-            animation: scan 4s linear infinite;
-            filter: blur(1px);
+            inset: 0;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
         }
 
-        /* Holographic effect */
-        .holographic {
-            background: linear-gradient(135deg, 
-                rgba(0, 212, 255, 0.1) 0%,
-                rgba(0, 153, 255, 0.1) 25%,
-                rgba(0, 255, 255, 0.1) 50%,
-                rgba(0, 153, 255, 0.1) 75%,
-                rgba(0, 212, 255, 0.1) 100%);
-            background-size: 400% 400%;
-            animation: shimmer 6s ease infinite;
+        .time-unit:hover::before {
+            opacity: 1;
         }
 
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
+        .time-unit:hover {
+            transform: translateY(-10px);
+            border-color: rgba(59, 130, 246, 0.3);
+            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.15);
+            background: rgba(30, 41, 59, 0.6);
         }
 
-        ::-webkit-scrollbar-track {
-            background: var(--blue-dark);
+        .time-value {
+            display: block;
+            font-size: clamp(3.5rem, 7vw, 5rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, #93c5fd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 12px;
+            font-variant-numeric: tabular-nums;
         }
 
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, #00d4ff, #0099ff);
-            border-radius: 10px;
+        .time-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: rgba(148, 163, 184, 0.8);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
         }
+
+        /* Launch date */
+        .launch-date {
+            margin-top: 50px;
+            font-size: clamp(1.3rem, 3vw, 1.9rem);
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.95);
+            position: relative;
+            display: inline-block;
+            padding: 12px 32px;
+            background: rgba(59, 130, 246, 0.08);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .launch-date:hover {
+            background: rgba(59, 130, 246, 0.12);
+            border-color: rgba(59, 130, 246, 0.3);
+            transform: scale(1.02);
+        }
+
+        /* GitHub link */
+        .github-link {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 14px 32px;
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(59, 130, 246, 0.15);
+            border-radius: 50px;
+            color: rgba(226, 232, 240, 0.9);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            letter-spacing: 0.02em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .github-link::before {
+            content: '→';
+            font-size: 1.1rem;
+            transition: transform 0.3s;
+        }
+
+        .github-link:hover {
+            background: rgba(30, 41, 59, 0.7);
+            border-color: rgba(59, 130, 246, 0.3);
+            color: #fff;
+            transform: translateX(-50%) translateY(-3px);
+            box-shadow: 0 10px 40px rgba(59, 130, 246, 0.2);
+        }
+
+        .github-link:hover::before {
+            transform: translateX(3px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .countdown-wrapper {
+                padding: 40px 24px;
+            }
+
+            .countdown {
+                gap: 20px;
+            }
+
+            .time-unit {
+                padding: 32px 16px;
+            }
+
+            .github-link {
+                bottom: 20px;
+                font-size: 0.85rem;
+                padding: 12px 28px;
+            }
+        }
+
+        /* Smooth entrance animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container > * {
+            animation: fadeInUp 1s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+        }
+
+        h1 { animation-delay: 0.1s; }
+        .subtitle { animation-delay: 0.2s; }
+        .countdown-wrapper { animation-delay: 0.3s; }
     </style>
 </head>
-<body class="bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 min-h-screen overflow-x-hidden relative">
+<body>
+    <div class="gradient-bg"></div>
+    <div class="grid"></div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
     
-    <!-- Animated Background Grid -->
-    <div class="fixed inset-0 grid-pattern opacity-30"></div>
-    
-    <!-- Floating Orbs -->
-    <div class="fixed top-0 left-0 w-96 h-96 bg-cyan-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float"></div>
-    <div class="fixed top-1/2 right-0 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float" style="animation-delay: 2s;"></div>
-    <div class="fixed bottom-0 left-1/2 w-96 h-96 bg-cyan-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float" style="animation-delay: 4s;"></div>
-    
-    <!-- Scan Lines -->
-    <div class="scan-line top-0"></div>
-    
-    <!-- Main Container -->
-    <div class="relative z-10 min-h-screen flex flex-col items-center justify-center px-4 py-20">
+    <div class="container">
+        <h1>MIDAGI ON<br>TULEMAS</h1>
+        <p class="subtitle">Valmistud millekski erakordse jaoks</p>
         
-        <!-- Logo/Icon -->
-        <div class="mb-12 relative">
-            <div class="absolute inset-0 bg-cyan-500 rounded-3xl blur-2xl opacity-50 animate-pulse-ring"></div>
-            <div class="absolute inset-0 bg-cyan-400 rounded-3xl blur-xl opacity-30 animate-pulse-ring" style="animation-delay: 0.5s;"></div>
-            <div class="relative w-20 h-20 bg-gradient-to-br from-cyan-400 to-blue-600 rounded-3xl flex items-center justify-center animate-float cyber-border">
-                <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10 2l8 4v8l-8 4-8-4V6l8-4zm0 2.5L4 7v6l6 3 6-3V7l-6-2.5z"/>
-                    <path d="M10 8l4 2v4l-4 2-4-2v-4l4-2z"/>
-                </svg>
+        <div class="countdown-wrapper">
+            <div class="countdown">
+                <div class="time-unit">
+                    <span class="time-value" id="days">00</span>
+                    <span class="time-label">Päeva</span>
+                </div>
+                <div class="time-unit">
+                    <span class="time-value" id="hours">00</span>
+                    <span class="time-label">Tundi</span>
+                </div>
+                <div class="time-unit">
+                    <span class="time-value" id="minutes">00</span>
+                    <span class="time-label">Minutit</span>
+                </div>
+                <div class="time-unit">
+                    <span class="time-value" id="seconds">00</span>
+                    <span class="time-label">Sekundit</span>
+                </div>
             </div>
-        </div>
-        
-        <!-- Main Heading -->
-        <div class="text-center mb-16 space-y-6">
-            <h1 class="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black orbitron tracking-tighter leading-none">
-                <span class="block text-gradient animate-neon">MIDAGI</span>
-                <span class="block text-gradient animate-neon" style="animation-delay: 0.2s;">ON</span>
-                <span class="block text-gradient animate-neon" style="animation-delay: 0.4s;">TULEMAS</span>
-            </h1>
             
-            <div class="flex items-center justify-center gap-4">
-                <div class="h-px w-12 sm:w-20 bg-gradient-to-r from-transparent to-cyan-400"></div>
-                <p class="text-cyan-400 text-sm sm:text-base md:text-lg uppercase tracking-[0.3em] font-light">
-                    Varsti Paljastatud
-                </p>
-                <div class="h-px w-12 sm:w-20 bg-gradient-to-l from-transparent to-cyan-400"></div>
-            </div>
-        </div>
-        
-        <!-- Countdown Container -->
-        <div class="w-full max-w-5xl relative">
-            <div class="glass-morphism rounded-3xl md:rounded-[3rem] p-8 sm:p-12 md:p-16 relative overflow-hidden cyber-border">
-                
-                <!-- Holographic overlay -->
-                <div class="absolute inset-0 holographic rounded-3xl md:rounded-[3rem] pointer-events-none"></div>
-                
-                <!-- Scan line inside container -->
-                <div class="scan-line"></div>
-                
-                <!-- Countdown Grid -->
-                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8 relative z-10">
-                    
-                    <!-- Days -->
-                    <div class="group relative">
-                        <div class="absolute inset-0 bg-cyan-500 rounded-2xl blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
-                        <div class="relative glass-morphism rounded-2xl p-6 sm:p-8 md:p-10 transform transition-all duration-300 hover:-translate-y-2 hover:scale-105">
-                            <div class="absolute top-0 left-0 w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
-                            <div class="absolute top-0 right-0 w-2 h-2 bg-cyan-400 rounded-full animate-pulse" style="animation-delay: 0.5s;"></div>
-                            <div class="absolute bottom-0 left-0 w-2 h-2 bg-cyan-400 rounded-full animate-pulse" style="animation-delay: 1s;"></div>
-                            <div class="absolute bottom-0 right-0 w-2 h-2 bg-cyan-400 rounded-full animate-pulse" style="animation-delay: 1.5s;"></div>
-                            
-                            <div class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black orbitron text-gradient mb-3" id="days">00</div>
-                            <div class="text-xs sm:text-sm md:text-base text-cyan-300 uppercase tracking-widest font-semibold">Päeva</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Hours -->
-                    <div class="group relative">
-                        <div class="absolute inset-0 bg-cyan-500 rounded-2xl blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
-                        <div class="relative glass-morphism rounded-2xl p-6 sm:p-8 md:p-10 transform transition-all duration-300 hover:-translate-y-2 hover:scale-105">
-                            <div class="absolute top-0 left-0 w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
-                            <div class="absolute top-0 right-0 w-2 h-2 bg-cyan-400 rounded-full animate-pulse" style="animation-delay: 0.5s;"></div>
-                            <div class="absolute bottom-0 left-0 w-2 h-2 bg-cyan-400 rounded-full animate-pulse" style="animation-delay: 1s;"></div>
-                            <div class="absolute bottom-0 right-0 w-2 h-2 bg-cyan-400 rounded-full animate-pulse" style="animation-delay: 1.5s;"></div>
-                            
-                            <div class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black orbitron text-gradient mb-3" id="hours">00</div>
-                            <div class="text-xs sm:text-sm md:text-base text-cyan-300 uppercase tracking-widest font-semibold">Tundi</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Minutes -->
-                    <div class="group relative">
-                        <div class="absolute inset-0 bg-cyan-500 rounded-2xl blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
-                        <div class="relative glass-morphism rounded-2xl p-6 sm:p-8 md:p-10 transform transition-all duration-300 hover:-translate-y-2 hover:scale-105">
-                            <div class="absolute top-0 left-0 w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
-                            <div class="absolute top-0 right-0 w-2 h-2 bg-cyan-400 rounded-full animate-pulse" style="animation-delay: 0.5s;"></div>
-                            <div class="absolute bottom-0 left-0 w-2 h-2 bg-cyan-400 rounded-full animate-pulse" style="animation-delay: 1s;"></div>
-                            <div class="absolute bottom-0 right-0 w-2 h-2 bg-cyan-400 rounded-full animate-pulse" style="animation-delay: 1.5s;"></div>
-                            
-                            <div class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black orbitron text-gradient mb-3" id="minutes">00</div>
-                            <div class="text-xs sm:text-sm md:text-base text-cyan-300 uppercase tracking-widest font-semibold">Minutit</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Seconds -->
-                    <div class="group relative">
-                        <div class="absolute inset-0 bg-cyan-500 rounded-2xl blur-xl opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
-                        <div class="relative glass-morphism rounded-2xl p-6 sm:p-8 md:p-10 transform transition-all duration-300 hover:-translate-y-2 hover:scale-105">
-                            <div class="absolute top-0 left-0 w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
-                            <div class="absolute top-0 right-0 w-2 h-2 bg-cyan-400 rounded-full animate-pulse" style="animation-delay: 0.5s;"></div>
-                            <div class="absolute bottom-0 left-0 w-2 h-2 bg-cyan-400 rounded-full animate-pulse" style="animation-delay: 1s;"></div>
-                            <div class="absolute bottom-0 right-0 w-2 h-2 bg-cyan-400 rounded-full animate-pulse" style="animation-delay: 1.5s;"></div>
-                            
-                            <div class="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black orbitron text-gradient mb-3" id="seconds">00</div>
-                            <div class="text-xs sm:text-sm md:text-base text-cyan-300 uppercase tracking-widest font-semibold">Sekundit</div>
-                        </div>
-                    </div>
-                    
-                </div>
-                
-                <!-- Launch Date -->
-                <div class="mt-12 text-center relative z-10">
-                    <div class="inline-block relative group">
-                        <div class="absolute inset-0 bg-cyan-500 rounded-full blur-lg opacity-50 group-hover:opacity-100 transition-opacity"></div>
-                        <div class="relative glass-morphism rounded-full px-8 py-4 border-2 border-cyan-400">
-                            <span class="text-xl sm:text-2xl md:text-3xl font-bold orbitron text-gradient">01.12.2025</span>
-                        </div>
-                    </div>
-                    <p class="mt-6 text-cyan-300 text-sm sm:text-base md:text-lg font-light tracking-wider">
-                        Kõik selgub peagi...
-                    </p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Bottom decoration -->
-        <div class="mt-16 flex items-center gap-2 text-cyan-400 text-sm">
-            <div class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
-            <div class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" style="animation-delay: 0.2s;"></div>
-            <div class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" style="animation-delay: 0.4s;"></div>
+            <div class="launch-date">1. Detsember 2025</div>
         </div>
     </div>
-    
-    <!-- GitHub Link -->
-    <a href="https://github.com/mdeakesolen2" 
-       class="fixed bottom-8 left-1/2 -translate-x-1/2 glass-morphism rounded-full px-6 sm:px-8 py-3 sm:py-4 text-cyan-300 hover:text-white transition-all duration-300 hover:-translate-y-1 hover:scale-105 group z-20 cyber-border">
-        <div class="flex items-center gap-3">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-            </svg>
-            <span class="font-semibold tracking-wide">@mdeakesolen2</span>
-            <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-            </svg>
-        </div>
+
+    <a href="https://github.com/mdeakesolen2" class="github-link">
+        <span>@mdeakesolen2</span>
     </a>
 
     <script>
-        // Countdown functionality
         const countdownDate = new Date('December 1, 2025 00:00:00').getTime();
 
         function updateCountdown() {
@@ -317,15 +377,14 @@
             const distance = countdownDate - now;
 
             if (distance < 0) {
-                document.querySelector('.glass-morphism').innerHTML = `
-                    <div class="text-center py-20 relative z-10">
-                        <div class="text-8xl mb-8 animate-bounce">🎉</div>
-                        <div class="text-5xl md:text-7xl font-black orbitron text-gradient mb-6">
-                            See on siin!
+                document.querySelector('.countdown-wrapper').innerHTML = `
+                    <div style="padding: 50px 20px;">
+                        <div style="font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 800; margin-bottom: 24px; background: linear-gradient(135deg, #ffffff 0%, #93c5fd 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                            See on siin! 🎉
                         </div>
-                        <p class="text-xl md:text-2xl text-cyan-300">
+                        <div style="font-size: clamp(1rem, 3vw, 1.5rem); color: rgba(148, 163, 184, 0.9);">
                             Midagi uskumatut on saabunud
-                        </p>
+                        </div>
                     </div>
                 `;
                 return;
@@ -345,14 +404,13 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
 
-        // Add parallax effect to floating orbs
+        // Smooth parallax effect on mouse move
         document.addEventListener('mousemove', (e) => {
-            const orbs = document.querySelectorAll('.animate-float');
-            const x = e.clientX / window.innerWidth;
-            const y = e.clientY / window.innerHeight;
+            const x = e.clientX / window.innerWidth - 0.5;
+            const y = e.clientY / window.innerHeight - 0.5;
             
-            orbs.forEach((orb, index) => {
-                const speed = (index + 1) * 20;
+            document.querySelectorAll('.orb').forEach((orb, index) => {
+                const speed = (index + 1) * 15;
                 orb.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
             });
         });
